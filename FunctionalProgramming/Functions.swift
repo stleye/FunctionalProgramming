@@ -130,6 +130,17 @@ func merge<A: Comparable>(_ l1: [A], _ l2: [A]) -> [A] {
     return [l2.first!] + merge(l1, Array(l2.dropFirst()))
 }
 
+// Implement the function pow(a, b) that returns a^b using divideAndConquer
+func pow(_ a: Int, _ b: Int) -> Int {
+    let trivial = { (e: Int, p: Int) in p == 0 || p == 1 }
+    let solve = { (e: Int, p: Int) in e == 0 ? 1 : e }
+    let split = { (e: Int, p: Int) in p % 2 == 0 ? [(e, p/2), (e, p/2)] : [(e, p/2), (e, p/2), (e, 1)] }
+    let combine = { (e: [Int]) -> Int in e.reduce(1, { (r, i) -> Int in r * i }) }
+    return divideAndConquer(trivial: trivial, solve: solve, split: split, combine: combine, x: (a, b))
+}
+
+// Recursion scheme on lists
+
 func foldr<A, B>(_ f: (A, B) -> B, _ z: B, _ l: [A]) -> B {
     if l.isEmpty { return z }
     return f(l.first!, foldr(f, z, Array(l.dropFirst())))
