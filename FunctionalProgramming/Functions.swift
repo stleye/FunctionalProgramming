@@ -174,3 +174,27 @@ func map<A, B>(_ f: (A) -> B, _ l: [A]) -> [B] {
 func filter<A>(_ f: (A) -> Bool, _ l: [A]) -> [A] {
     return foldr({ (f($0) ? [$0] : []) + $1 }, [], l)
 }
+
+func empty<A: Equatable>() -> Conj<A> {
+    return { _ in false }
+}
+
+// Define the function add :: A -> Conj<A> -> Conj<A>
+func add<A: Equatable>(_ e: A, _ c: @escaping Conj<A>) -> Conj<A> {
+    return { $0 == e || c($0) }
+}
+
+// Define the function intersection :: Conj<A> -> Conj<A> -> Conj<A>
+func intersection<A: Equatable>(_ c1: @escaping Conj<A>, _ c2: @escaping Conj<A>) -> Conj<A> {
+    return { c1($0) && c2($0) }
+}
+
+// Define the function union :: Conj<A> -> Conj<A> -> Conj<A>
+func union<A: Equatable>(_ c1: @escaping Conj<A>, _ c2: @escaping Conj<A>) -> Conj<A> {
+    return { c1($0) || c2($0) }
+}
+
+// Define pairs that returns a Conj with all the pair numbers
+func pairs() -> Conj<Int> {
+    return { $0 % 2 == 0 }
+}

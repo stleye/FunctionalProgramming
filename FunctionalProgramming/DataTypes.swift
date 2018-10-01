@@ -21,3 +21,5 @@ indirect enum Polynomial<A> {
     case Sum(Polynomial<A>, Polynomial<A>)
     case Mult(Polynomial<A>, Polynomial<A>)
 }
+
+typealias Conj<A> = (A) -> Bool
