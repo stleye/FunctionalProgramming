@@ -5,16 +5,6 @@ func inverse(_ f: Float) -> Maybe<Float> {
     return f == 0 ? .Nothing : .Just(1/f)
 }
 
-//Define the function toInt :: Either Int Bool -> Int that converts to Int an expression that may be Int or Bool (it returns 0 for False or 1 for True)
-func toInt(_ e: Either<Int, Bool>) -> Int {
-    switch e {
-    case .Left(let l):
-        return l
-    case .Right(let r):
-        return r ? 1 : 0
-    }
-}
-
 //Define the function clean :: string -> string -> string that removes the characters in the second string that appear in the first string. For example, clean("susto", "puerta") returns "pera"
 func clean(_ s1: String, _ s2: String) -> String {
     if s1.isEmpty { return s2 }
@@ -27,55 +17,10 @@ func contains(_ c: Character, s: String) -> Bool {
     return s.first! == c || contains(c, s: String(s.dropFirst()))
 }
 
-// Define the function averageDiff :: [Float] -> [Float] that given a list of numbers, it returns the difference of each of them with the average. For example, averageDiff([2, 3, 4]) returns [-1, 0, 1]
-func averageDiff(_ l: [Float]) -> [Float] {
-    return l.map({$0 - average(l)})
-}
-
-func average(_ l: [Float]) -> Float {
-    if l.isEmpty { return 0 }
-    return sum(l) / Float(l.count)
-}
-
-func sum(_ l: [Float]) -> Float {
-    if l.isEmpty { return 0 }
-    return l.first! + sum(Array(l.dropFirst()))
-}
-
 // Define allEquals :: [Int] -> Bool that given a list of numbers, it returns true if they are all equals
 func allEquals(_ l: [Int]) -> Bool {
     if l.count <= 1 { return true }
     return l.first! == l.dropFirst().first! && allEquals(Array(l.dropFirst()))
-}
-
-// Define isEmpty :: BinaryTree -> Bool that says if a tree is empty or not
-func isEmpty<T>(_ bt: BinaryTree<T>) -> Bool {
-    switch bt {
-    case .Nil:
-        return true
-    case .Bin(_, _, _):
-        return false
-    }
-}
-
-// Define negation :: BinaryTree -> BinaryTree that takes a binary tree of Int and returns another binary tree with all the elements negated
-func negation(_ bt: BinaryTree<Int>) -> BinaryTree<Int> {
-    switch bt {
-    case .Nil:
-        return .Nil
-    case .Bin(let left, let r, let right):
-        return .Bin(negation(left), -r, negation(right))
-    }
-}
-
-// Define product :: BinaryTree -> Int that takes a binary tree
-func product(_ bt: BinaryTree<Int>) -> Int {
-    switch bt {
-    case .Nil:
-        return 1
-    case .Bin(let left, let r, let right):
-        return r * product(left) * product(right)
-    }
 }
 
 // Currify the function max :: Int -> Int -> Int that takes 2 arguments and returns the max of both
